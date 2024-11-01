@@ -1,0 +1,114 @@
+.table-container {
+    background-color: #e9ecef;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.message-panel {
+    margin-bottom: 15px;
+}
+
+.table-pagination {
+    margin-bottom: 15px;
+    color: #343a40;
+}
+
+.data-table {
+    width: 100%;
+    border: 2px solid #dee2e6;
+    border-collapse: collapse;
+    overflow-x: auto;
+    background-color: #ffffff;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #dee2e6;
+    padding: 12px;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.header-text {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.column-text {
+    color: #495057;
+}
+
+.btn-link {
+    color: #007bff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.btn-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-create {
+    color: white;
+    background-color: #28a745;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-create:hover {
+    background-color: #218838;
+}
+
+.btn-delete {
+    color: white;
+    background-color: #dc3545;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .table-container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-link,
+    .btn-create,
+    .btn-delete {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+

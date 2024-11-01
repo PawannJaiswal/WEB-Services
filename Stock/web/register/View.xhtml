@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewRegisterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewRegisterLabel_id}"/>
+                    <h:outputText value="#{registerController.selected.id}" title="#{bundle.ViewRegisterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewRegisterLabel_name}"/>
+                    <h:outputText value="#{registerController.selected.name}" title="#{bundle.ViewRegisterTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewRegisterLabel_password}"/>
+                    <h:outputText value="#{registerController.selected.password}" title="#{bundle.ViewRegisterTitle_password}"/>
+                    <h:outputText value="#{bundle.ViewRegisterLabel_confirmPassword}"/>
+                    <h:outputText value="#{registerController.selected.confirmPassword}" title="#{bundle.ViewRegisterTitle_confirmPassword}"/>
+                    <h:outputText value="#{bundle.ViewRegisterLabel_email}"/>
+                    <h:outputText value="#{registerController.selected.email}" title="#{bundle.ViewRegisterTitle_email}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{registerController.destroyAndView}" value="#{bundle.ViewRegisterDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewRegisterEditLink}"/>
+                <br />
+                <h:commandLink action="#{registerController.prepareCreate}" value="#{bundle.ViewRegisterCreateLink}" />
+                <br />
+                <h:commandLink action="#{registerController.prepareList}" value="#{bundle.ViewRegisterShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewRegisterIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

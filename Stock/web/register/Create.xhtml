@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateRegisterTitle}"></h:outputText>
+            <h:outputStylesheet name="create.css" />
+
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+
+            <!-- Opening h:form tag -->
+            <h:form styleClass="form-container">
+                <h:panelGrid columns="1" styleClass="form-grid">
+                    <h:outputLabel value="#{bundle.CreateRegisterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{registerController.selected.name}" title="#{bundle.CreateRegisterTitle_name}" styleClass="input-field"/>
+                    
+                    <h:outputLabel value="#{bundle.CreateRegisterLabel_password}" for="password" />
+                    <h:inputSecret id="password" value="#{registerController.selected.password}" title="#{bundle.CreateRegisterTitle_password}" styleClass="input-field"/>
+                    
+                    <h:outputLabel value="#{bundle.CreateRegisterLabel_confirmPassword}" for="confirmPassword" />
+                    <h:inputSecret id="confirmPassword" value="#{registerController.selected.confirmPassword}" title="#{bundle.CreateRegisterTitle_confirmPassword}" styleClass="input-field"/>
+                    
+                    <h:outputLabel value="#{bundle.CreateRegisterLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{registerController.selected.email}" title="#{bundle.CreateRegisterTitle_email}" styleClass="input-field"/>
+                </h:panelGrid>
+                
+                <h:commandLink action="#{registerController.create}" value="Register" styleClass="btn" />
+                <br />
+                <h:commandLink action="#{registerController.prepareList}" value="#{bundle.CreateRegisterShowAllLink}" immediate="true" styleClass="btn-secondary"/>
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateRegisterIndexLink}" styleClass="link-text"/>
+            </h:form> <!-- Closing h:form tag -->
+        </ui:define>
+    </ui:composition>
+
+</html>

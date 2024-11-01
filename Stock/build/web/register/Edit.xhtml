@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditRegisterTitle}" />
+              <h:outputStylesheet name="Edit.css" />
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block" style="margin-bottom: 20px;">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table" />
+            </h:panelGroup>
+            
+            <h:form style="max-width: 600px; margin: auto; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; background-color: #f9f9f9;">
+                <h:panelGrid columns="2" cellpadding="5" styleClass="form-grid">
+                    <h:outputLabel value="#{bundle.EditRegisterLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{registerController.selected.id}" title="#{bundle.EditRegisterTitle_id}" required="true" requiredMessage="ID is required" />
+
+                    <h:outputLabel value="#{bundle.EditRegisterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{registerController.selected.name}" title="#{bundle.EditRegisterTitle_name}" required="true" requiredMessage="Name is required" />
+
+                    <h:outputLabel value="#{bundle.EditRegisterLabel_password}" for="password" />
+                    <h:inputSecret id="password" value="#{registerController.selected.password}" title="#{bundle.EditRegisterTitle_password}" required="true" requiredMessage="Password is required" />
+
+                    <h:outputLabel value="#{bundle.EditRegisterLabel_confirmPassword}" for="confirmPassword" />
+                    <h:inputSecret id="confirmPassword" value="#{registerController.selected.confirmPassword}" title="#{bundle.EditRegisterTitle_confirmPassword}" required="true" requiredMessage="Confirm Password is required" />
+
+                    <h:outputLabel value="#{bundle.EditRegisterLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{registerController.selected.email}" title="#{bundle.EditRegisterTitle_email}" required="true" requiredMessage="Email is required" />
+                </h:panelGrid>
+
+                <h:panelGroup style="margin-top: 20px; text-align: center;">
+                    <h:commandButton value="#{bundle.EditRegisterSaveLink}" action="#{registerController.update}" styleClass="btn btn-primary" />
+                    <h:link outcome="View" value="#{bundle.EditRegisterViewLink}" styleClass="btn btn-link" />
+                    <h:commandButton value="#{bundle.EditRegisterShowAllLink}" action="#{registerController.prepareList}" immediate="true" styleClass="btn btn-secondary" />
+                    <h:link outcome="/index" value="#{bundle.EditRegisterIndexLink}" styleClass="btn btn-link" />
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

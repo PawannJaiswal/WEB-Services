@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{bundle.ListRegisterTitle}" />
+        <h:outputStylesheet name="List.css" />
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form styleClass="jsfcrud_list_form">
+            
+            <!-- Message Panel -->
+            <h:panelGroup id="messagePanel" layout="block" styleClass="message-panel">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            
+            <!-- Empty List Message -->
+            <h:outputText escape="false" value="#{bundle.ListRegisterEmpty}" 
+                          rendered="#{registerController.items.rowCount == 0}" />
+            
+            <!-- Data Table with Items -->
+            <h:panelGroup rendered="#{registerController.items.rowCount > 0}" styleClass="table-container">
+                
+                <!-- Pagination Controls -->
+                <div class="table-pagination">
+                    <h:outputText value="#{registerController.pagination.pageFirstItem + 1}..#{registerController.pagination.pageLastItem + 1}/#{registerController.pagination.itemsCount}" />&nbsp;
+                    <h:commandLink action="#{registerController.previous}" value="#{bundle.Previous}" 
+                                   styleClass="btn-link" rendered="#{registerController.pagination.hasPreviousPage}" />&nbsp;
+                    <h:commandLink action="#{registerController.next}" value="#{bundle.Next}" 
+                                   styleClass="btn-link" rendered="#{registerController.pagination.hasNextPage}" />
+                </div>
+                
+                <!-- Data Table -->
+                <h:dataTable value="#{registerController.items}" var="item" border="0" cellpadding="2" cellspacing="0" 
+                             rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" styleClass="data-table">
+                    
+                    <!-- ID Column -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListRegisterTitle_id}" />
+                        </f:facet>
+                        <h:outputText value="#{item.id}" />
+                    </h:column>
+
+                    <!-- Name Column -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListRegisterTitle_name}" />
+                        </f:facet>
+                        <h:outputText value="#{item.name}" />
+                    </h:column>
+
+                    <!-- Password Column -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListRegisterTitle_password}" />
+                        </f:facet>
+                        <h:outputText value="#{item.password}" />
+                    </h:column>
+
+                    <!-- Confirm Password Column -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListRegisterTitle_confirmPassword}" />
+                        </f:facet>
+                        <h:outputText value="#{item.confirmPassword}" />
+                    </h:column>
+
+                    <!-- Email Column -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListRegisterTitle_email}" />
+                        </f:facet>
+                        <h:outputText value="#{item.email}" />
+                    </h:column>
+
+                    <!-- Action Links Column -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;" />
+                        </f:facet>
+                        <h:commandLink action="#{registerController.prepareView}" value="#{bundle.ListRegisterViewLink}" styleClass="btn-link"/>
+                        <h:outputText value=" " />
+                        <h:commandLink action="#{registerController.prepareEdit}" value="#{bundle.ListRegisterEditLink}" styleClass="btn-link"/>
+                        <h:outputText value=" " />
+                        <h:commandLink action="#{registerController.destroy}" value="#{bundle.ListRegisterDestroyLink}" styleClass="btn-delete"/>
+                    </h:column>
+                    
+                </h:dataTable>
+            </h:panelGroup>
+            
+            <!-- Create and Index Links -->
+            <br />
+            <h:commandLink action="#{registerController.prepareCreate}" value="#{bundle.ListRegisterCreateLink}" styleClass="btn-create" />
+            <br />
+            <br />
+            <h:link outcome="/index" value="#{bundle.ListRegisterIndexLink}" styleClass="btn-link" />
+
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>

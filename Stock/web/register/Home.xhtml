@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Market</title>
+    <h:outputStylesheet name="Home.css" />
+</h:head>
+
+<h:body>
+    <header>
+        <nav>
+            <div class="circular-logo">
+                <h:graphicImage value="https://img.freepik.com/premium-vector/bearish-bullish-science-stock-market-economics_67811-522.jpg?w=360" alt="Logo" />
+            </div>
+            <h1 class="stock-market-image"></h1>
+            <div>
+                <input type="text" id="searchInput" placeholder="Search stocks" />
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="nifty50">Nifty Fifty</option>
+                    <option value="bankNifty">Bank Nifty</option>
+                    <option value="sensex">Sensex</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="stock-list">
+            <h2>Stocks</h2>
+            <ul id="stocks">
+                <li id="nifty50ListItem">Nifty Fifty</li>
+                <li id="bankNiftyListItem">Bank Nifty</li>
+                <li id="sensexListItem">Sensex</li>
+            </ul>
+            <div id="stock-details" style="display: none;">
+                <h3>Stock Details</h3>
+                <p><strong>Company Name:</strong> <span id="companyName"></span></p>
+                <p><strong>Symbol:</strong> <span id="symbol"></span></p>
+                <p><strong>Current Price:</strong> ₹ <span id="currentPrice"></span></p>
+                <p><span id="volatility"></span></p>
+            </div>
+        </section>
+    </main>
+
+    <h:outputScript>
+            
+    // Sample stock data for Nifty Fifty, Bank Nifty, and Sensex
+    const nifty50Companies = [
+        { symbol: "RELIANCE", name: "Reliance Industries", price: 2500.00 },
+        { symbol: "TCS", name: "Tata Consultancy Services", price: 3200.00 },
+        { symbol: "HDFCBANK", name: "HDFC Bank", price: 1600.00 }
+    ];
+
+    const bankNiftyCompanies = [
+        { symbol: "ICICIBANK", name: "ICICI Bank Ltd.", price: 700.00 },
+        { symbol: "KOTAKBANK", name: "Kotak Mahindra Bank", price: 2000.00 },
+        { symbol: "AXISBANK", name: "Axis Bank", price: 900.00 }
+    ];
+
+    const sensexCompanies = [
+        { symbol: "HINDUNILVR", name: "Hindustan Unilever Ltd.", price: 2200.00 },
+        { symbol: "ONGC", name: "Oil and Natural Gas Corporation", price: 140.00 },
+        { symbol: "RELIANCE", name: "Reliance Industries", price: 2500.00 }
+    ];
+
+    const stocksList = document.getElementById("stocks");
+    const stockDetails = document.getElementById("stock-details");
+    const companyName = document.getElementById("companyName");
+    const symbol = document.getElementById("symbol");
+    const currentPrice = document.getElementById("currentPrice");
+    const volatility = document.getElementById("volatility");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    let selectedStock = null;
+
+    function displayStocks(stockData) {
+        stocksList.innerHTML = '';
+
+        stockData.forEach((stock) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = stock.name;
+            listItem.style.cursor = "pointer";
+
+            listItem.addEventListener("click", function () {
+                if (selectedStock === stock) {
+                    return;
+                }
+                selectedStock = stock;
+                resetStockDetails();
+                displayStockDetails(stock);
+            });
+
+            stocksList.appendChild(listItem);
+
+            // Simulate volatility by changing the price randomly
+            setInterval(() => {
+                const priceChange = (Math.random() - 0.5) * 10;  // Random price change
+                stock.price += priceChange;
+
+                const initialPrice = stockData.find((s) => s.symbol === stock.symbol).price;
+                const priceChangePercentage = ((stock.price - initialPrice) / initialPrice) * 100;
+                volatility.textContent = priceChangePercentage.toFixed(2) + "%";
+
+                if (selectedStock === stock) {
+                    currentPrice.textContent = stock.price.toFixed(2);
+
+                    const priceChangeIndicator = document.createElement("span");
+                    priceChangeIndicator.textContent = priceChange.toFixed(2);
+                    priceChangeIndicator.className = "price-change";
+                    currentPrice.appendChild(priceChangeIndicator);
+
+                    const priceChangePercentageElement = document.createElement("span");
+                    priceChangePercentageElement.textContent = ` (${priceChangePercentage.toFixed(2)}%)`;
+                    priceChangePercentageElement.className = "price-change-percentage";
+                    currentPrice.appendChild(priceChangePercentageElement);
+                }
+            }, 1000);
+        });
+    }
+
+    function displayStockDetails(stock) {
+        stockDetails.style.display = "block";
+        companyName.textContent = stock.name;
+        symbol.textContent = stock.symbol;
+        currentPrice.textContent = stock.price.toFixed(2);
+
+        const initialPrice = stockData.find((s) => s.symbol === stock.symbol).price;
+        const priceChangePercentage = ((stock.price - initialPrice) / initialPrice) * 100;
+        volatility.textContent = priceChangePercentage.toFixed(2) + "%";
+    }
+
+    function resetStockDetails() {
+        stockDetails.style.display = "none";
+        companyName.textContent = "";
+        symbol.textContent = "";
+        currentPrice.textContent = "";
+        volatility.textContent = "";
+    }
+
+    // Initialize with the Nifty Fifty stock data
+    displayStocks(nifty50Companies);
+
+    // Search functionality
+    searchInput.addEventListener("input", function () {
+        const searchTerm = searchInput.value.toLowerCase();
+        let filteredStocks = [];
+
+        if (categoryFilter.value === "all") {
+            filteredStocks = nifty50Companies.concat(bankNiftyCompanies, sensexCompanies);
+        } else if (categoryFilter.value === "nifty50") {
+            filteredStocks = nifty50Companies;
+        } else if (categoryFilter.value === "bankNifty") {
+            filteredStocks = bankNiftyCompanies;
+        } else if (categoryFilter.value === "sensex") {
+            filteredStocks = sensexCompanies;
+        }
+
+        filteredStocks = filteredStocks.filter(stock =>
+            stock.name.toLowerCase().includes(searchTerm) || stock.symbol.toLowerCase().includes(searchTerm)
+        );
+
+        displayStocks(filteredStocks);
+    });
+
+    // Category filter
+    categoryFilter.addEventListener("change", function () {
+        const selectedCategory = categoryFilter.value;
+        let filteredStocks = [];
+
+        if (selectedCategory === "all") {
+            filteredStocks = nifty50Companies.concat(bankNiftyCompanies, sensexCompanies);
+        } else if (selectedCategory === "nifty50") {
+            filteredStocks = nifty50Companies;
+        } else if (selectedCategory === "bankNifty") {
+            filteredStocks = bankNiftyCompanies;
+        } else if (selectedCategory === "sensex") {
+            filteredStocks = sensexCompanies;
+        }
+
+        displayStocks(filteredStocks);
+    });
+
+
+    </h:outputScript>
+</h:body>
+</html>
